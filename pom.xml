@@ -42,21 +42,6 @@
                     </dependency>
                 </dependencies>
             </plugin>
-            <plugin>
-        		<groupId>org.antlr</groupId>
-        		<artifactId>antlr3-maven-plugin</artifactId>
-        		<version>3.1.3-1</version>
-        		<executions>
-          			<execution>
-            			<configuration>
-              				<outputDirectory>src/main/java</outputDirectory>
-            			</configuration>
-            			<goals>
-              				<goal>antlr</goal>
-            			</goals>
-          			</execution>
-        		</executions>
-      		</plugin>
         </plugins>
     </build>
     <dependencies>
@@ -123,16 +108,6 @@
             <groupId>com.goldmansachs</groupId>
             <artifactId>gs-collections</artifactId>
             <version>5.0.0</version>
-        </dependency>
-    	<dependency>
-	      <groupId>org.antlr</groupId>
-	      <artifactId>antlr</artifactId>
-	      <version>3.1.3</version>
-        </dependency>
-        <dependency>  
-          <groupId>org.apache.lucene</groupId>  
-          <artifactId>lucene-core</artifactId>  
-          <version>3.0.2</version> 
         </dependency>
         <dependency>
 	      <groupId>com.sleepycat</groupId>

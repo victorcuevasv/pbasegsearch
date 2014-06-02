@@ -41,7 +41,7 @@ public class Domain {
 	}
 	
 	
-	private String getRandomTerm() {
+	public String getRandomTerm() {
 		int randPosition = this.randInt(0, this.termsList.size()-1);
 		String term = this.termsList.get(randPosition);
 		return term;

@@ -56,8 +56,16 @@ public class DomainCatalog {
 		}
 	}
 	
+
+	public String getRandomGenericTerm() {
+		int randPosition = this.randInt(0, this.genericNames.size()-1);
+		String genericName = this.genericNames.get(randPosition);
+		Domain genericDomain = this.genericHT.get(genericName);
+		return genericDomain.getRandomTerm();
+	}
 	
-	private Domain getRandomGenericDomain() {
+	
+	public Domain getRandomGenericDomain() {
 		int randPosition = this.randInt(0, this.genericNames.size()-1);
 		String genericName = this.genericNames.get(randPosition);
 		Domain genericDomain = this.genericHT.get(genericName);
@@ -65,7 +73,7 @@ public class DomainCatalog {
 	}
 	
 	
-	private Domain getRandomSpecificDomain() {
+	public Domain getRandomSpecificDomain() {
 		int randPosition = this.randInt(0, this.specificNames.size()-1);
 		String specificName = this.specificNames.get(randPosition);
 		Domain specificDomain = this.specificHT.get(specificName);

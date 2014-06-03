@@ -3,7 +3,7 @@
 Generate the data
 
 
-mvn exec:java -Dexec.mainClass="org.dataone.daks.pbasegsearch.DatasetGenerator" -Dexec.args="graphs.txt graphs computerdomains.xml sciencedomains.xml"
+mvn exec:java -Dexec.mainClass="org.dataone.daks.pbasegsearch.DatasetGenerator" -Dexec.args="graphs.txt graphs"
 
 
 Create the index
@@ -23,13 +23,13 @@ mvn exec:java -Dexec.mainClass="org.dataone.daks.pbasegsearch.SearchIndexTest" -
 Create the RDF database from the JSON files
 
 
-mvn exec:java -Dexec.mainClass="org.dataone.daks.pbasegsearch.DigraphJSONtoRDF" -Dexec.args="wfs wfs.txt numtraces.txt"     
+mvn exec:java -Dexec.mainClass="org.dataone.daks.pbasegsearch.DigraphJSONtoRDF" -Dexec.args="graphs graphs.txt"     
 
 
 Test the RDF database
 
 
-mvn exec:java -Dexec.mainClass="org.dataone.daks.pbaserdf.dao.LDBDAOTest" -Dexec.args="searchgraphs"
+mvn exec:java -Dexec.mainClass="org.dataone.daks.pbasegsearch.TDBDAOTest" -Dexec.args="gsearchgraph"
 
 
 

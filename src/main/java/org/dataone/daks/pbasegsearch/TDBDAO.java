@@ -113,10 +113,11 @@ public class TDBDAO {
         		"PREFIX dc: <http://purl.org/dc/terms/> \n" +
         		"PREFIX wfms: <http://www.vistrails.org/registry.xsd#> \n" +
         		"PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> \n" +
-        		"SELECT ?id ?title " + 
-        		"WHERE {  ?data dc:identifier ?id . " +
-        		"?data dc:title ?title . " +
-        		"?data rdf:type searchont:" + className + " . }";
+        		"SELECT ?id ?title ?rankF " + 
+        		"WHERE {  ?node dc:identifier ?id . " +
+        		"?node dc:title ?title . " +
+        		"OPTIONAL { ?node wfms:rankFactor ?rankF } . " +
+        		"?node rdf:type searchont:" + className + " . }";
 		JSONArray jsonArray = new JSONArray();
         Query query = QueryFactory.create(sparqlQueryString);
         QueryExecution qexec = QueryExecutionFactory.create(query, this.ds);
@@ -126,7 +127,13 @@ public class TDBDAO {
             JSONObject jsonObj = new JSONObject();
             String id = soln.getLiteral("id").getString();
             String title = soln.getLiteral("title").getString();
+            Literal rankFLit = soln.getLiteral("rankF");
             try {
+            	if( rankFLit != null ) {
+            		double rankF = rankFLit.getDouble();
+            		String rankFStr = String.format("%.3f", rankF);
+            		jsonObj.put("rankFactor", rankFStr);
+            	}
             	jsonObj.put("nodeId", id);
 				jsonObj.put("title", title);
 				jsonArray.put(jsonObj);

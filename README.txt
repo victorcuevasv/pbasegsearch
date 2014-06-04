@@ -32,6 +32,15 @@ Test the RDF database
 mvn exec:java -Dexec.mainClass="org.dataone.daks.pbasegsearch.TDBDAOTest" -Dexec.args="gsearchgraph"
 
 
+Test object rank evaluation
+
+mvn exec:java -Dexec.mainClass="org.dataone.daks.pbasegsearch.EvaluateObjectRank" -Dexec.args="gsearchgraph uranium fission"
+
+
+
+
+
+
 
 
 

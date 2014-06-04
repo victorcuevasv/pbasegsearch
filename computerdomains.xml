@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<domains>
+	<!-- http://www.math.utah.edu/~wisnia/glossary.html -->
+	<domain>
+		<name>computer</name>
+		<terms>access argument application authorization backup binary batch buffer code command compile 
+		configure compute control copy data dataset default disk directory drive error file ftp gui 
+		header host index input instruction macro memory message network object online open output 
+		parameter ping print queue record read recovery return run server session software storage 
+		text transfer username write  
+		</terms>
+	</domain>
+	<domain>
+		<name>cloud</name>
+		<terms>akka amazon apache api azure cluster cloud cuda database directx ec2 encryption erlang google 
+		haas hadoop haskell hive iaas ipython java jee json job linux mapreduce mashup matlab middleware 
+		mysql ocaml opengl opencl paas perl pig postgresql python rdf ruby saas script service sparql scala 
+		sql sla solver stream thread virtual vmware vpn vtk yahoo xml xslt xquery yaml web
+		</terms>
+	</domain>
+</domains>
+
+

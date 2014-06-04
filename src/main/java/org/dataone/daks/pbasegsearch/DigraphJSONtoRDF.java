@@ -6,6 +6,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 import java.util.StringTokenizer;
 
 import org.json.*;
@@ -33,11 +34,13 @@ public class DigraphJSONtoRDF {
 	
 	private OntModel model;
 	private HashMap<String, Individual> idToInd;
+	private Random rand;
 	
 	
 	public DigraphJSONtoRDF() {
 		this.model = createOntModel();
 		this.idToInd = new HashMap<String, Individual>();
+		this.rand = new Random();
 	}
 	
 	
@@ -149,6 +152,12 @@ public class DigraphJSONtoRDF {
 		this.idToInd.put(nodeId, nodeInd);
 		Property titleP = this.model.createProperty(DCTERMS_NS + "title");
 		nodeInd.addProperty(titleP, nodeId, XSDDatatype.XSDstring);
+		//Add the rankFactor attribute for nodes other than Data
+		if( !nodeId.startsWith("d") ) {
+			double rankFactor = this.randDouble(0, 1.0);
+			Property rankFactorP = this.model.createProperty(WFMS_NS + "rankFactor");
+			nodeInd.addProperty(rankFactorP, rankFactor + "", XSDDatatype.XSDdouble);
+		}
 		return nodeId;
 	}
 	
@@ -175,6 +184,12 @@ public class DigraphJSONtoRDF {
 			e.printStackTrace();
 		}
 		return builder.toString();
+	}
+	
+	
+    private double randDouble(double min, double max) {
+	    double randomNum = min + (max - min) * this.rand.nextDouble();
+	    return randomNum;
 	}
 	
 	

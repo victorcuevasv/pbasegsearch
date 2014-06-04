@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<domains>
+	<!-- http://www.nrc.gov/reading-rm/basic-ref/glossary.html -->
+	<domain>
+		<name>nuclear</name>
+		<terms>background becquerel beta binding breeder byproduct chain contamination control 
+		condensate coolant critical cooling core decay deuterium electrical emergency enriched exposure 
+		energy fission fuel gamma gas generator heat ion isotope mass meltdown moderator neutron nuclear 
+		particle plutonium power radioactivity radiation reaction reactor risk rod shielded spent 
+		tower tritium turbine uranium water waste
+		</terms>
+	</domain>
+	<!-- http://www.kumc.edu/gec/glossnew.html
+		 http://www.genome.gov/glossary/ -->
+	<domain>
+		<name>genetics</name>
+		<terms>allele amino acid carrier cell centromere chromosome clone codon cytogenetics disease dna 
+		dominant eugenics exons gamete gene genetic genotype genome genomic genotype mitochondrial 
+		mitosis mrna mutation nucleotide peptide phenotype prognosis protein recessive ribosomal ribosome 
+		rna somatic stem syndrome telomere trait transcription translation transgenic trna  
+		</terms>
+	</domain>
+	<!-- http://www.nasdaq.com/investing/glossary/ -->
+	<domain>
+		<name>investing</name>
+		<terms>aaa account adjusted agreement alpha ammortization annuity arbitrage asset auction  audit 
+		automated average baa1 baa2 backdating bailout balance bank bankruptcy base basel basket bear bid 
+		bitcoin bond broker bull business buy call capital cash close collateral commodity credit currency 
+		debt dividend earnings equity exchange financial income inflation interest loan market money 
+		option payment price quoted rate sell spot spread tax valuation yield 
+		</terms>
+	</domain>
+	<!-- http://www.epa.gov/climatechange/glossary.html -->
+	<domain>
+		<name>climate</name>
+		<terms>aerosols albedo anthropogenic alternative atmosphere biomass biosphere borehole carbon 
+		cycle chlorofluorocarbons  concentration dioxide deforestation desertification ecosystem emissions 
+		evaporation fossil geosphere global glacier greenhouse gases halocarbons humidity hydrocarbons 
+		hydrosphere ice infrared methane nitrogen ocean oxide ozone permafrost photosynthesis radiation 
+		soil solar temperature ultraviolet vapor water  
+		</terms>
+	</domain>
+</domains>
+
+

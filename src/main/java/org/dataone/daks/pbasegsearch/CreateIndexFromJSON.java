@@ -109,8 +109,10 @@ public class CreateIndexFromJSON {
 			this.searchIndex.put(term, newVal);
 		}
 		else {
-			newVal = oldVal + nodeId + " ";
-			this.searchIndex.replace(term, newVal);
+			if( !oldVal.contains(nodeId) ) {
+				newVal = oldVal + nodeId + " ";
+				this.searchIndex.replace(term, newVal);
+			}
 		}
 	}
 	

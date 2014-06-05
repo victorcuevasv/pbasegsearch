@@ -1,0 +1,166 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>PBase Global Search</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.17.2/build/cssreset/cssreset.css" type="text/css">
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.17.2/build/cssfonts/cssfonts.css" type="text/css">
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.17.2/build/cssgrids/cssgrids.css" type="text/css">
+    <script src="http://yui.yahooapis.com/3.17.2/build/yui/yui-min.js"></script>
+<style>
+
+/* 3 column fluid layout (either side column is optional, just omit the layout padding) */
+#layout {
+    padding-left:150px; /* "left col" width */ 
+    padding-right:150px; /* "right col" width */
+}
+
+#nav {
+    margin-left:-150px; /* "left col" width */
+    width:150px;
+}
+
+#extra {
+    width:150px;
+    margin-right:-150px; /* "right col" width */
+}
+
+#main {
+    width:100%;
+}
+
+/* arbitrary content styling */
+#hd, #nav .content, #main .content, #extra .content, #ft {
+    border: 3px solid #ccc;
+    height: 500px; 
+}
+
+#hd, #ft {
+    height: 40px;
+}
+</style>
+
+</head>
+<body>
+    <div id="hd"></div>
+
+    <div class="yui3-g" id="layout">
+        <div class="yui3-u" id="nav">
+            <div class="content"></div>
+        </div>
+
+        <div class="yui3-u" id="main">
+            <div class="content">
+            	Database name:<br/><input type="text" id="dbnameText" size="15" value="gsearchgraph"><br/><br/>
+				Keywords:<br/><input type="text" id="keywordsText" size="15"><br/><br/>
+				<form action=""> 
+				<input type="radio" name="semanticsProperty" value="true" checked="checked">&nbsp;AND<br/>
+				<input type="radio" name="semanticsProperty" value="false">&nbsp;OR<br/>
+				</form>
+				<br/><br/>
+				<form action=""> 
+				<input type="radio" name="filter" value="d" checked="checked">&nbsp;Data<br/>
+				<input type="radio" name="filter" value="wf">&nbsp;Workflow<br/>
+				<input type="radio" name="filter" value="auth">&nbsp;Author<br/>
+				<input type="radio" name="filter" value="pub">&nbsp;Publication<br/>
+				</form>
+				<br/><br/>
+				<form action="">
+				<input type="checkbox" name="useGlobal" value="true">&nbsp;Global rank<br>
+				</form>
+				<br/><br/>
+				<input id="doSearchBtn" type="button" value="Execute">
+			</div>
+        </div>
+
+        <div class="yui3-u" id="extra">
+            <div class="content"></div>
+        </div>
+    </div>
+
+    <div id="ft"></div>
+
+<script>
+
+function callOrEval(Y) {
+	var url = 'webresources/orevalresource';
+	var keywordsText = Y.one('#keywordsText');
+	var keywordsParam = keywordsText.get('value');
+	var semanticsStr = Y.one('[name=semanticsProperty]:checked').get('value');
+	var useGlobalStr = Y.one('[name=useGlobal]').get('checked');
+	var filterStr = Y.one('[name=filter]:checked').get('value');
+	var searchStr = '&andsemantics=' + semanticsStr + '&filter=' + filterStr + '&useglobal=' + useGlobalStr;
+	if( keywordsParam.trim().length > 1 )
+		searchStr = searchStr + '&keywords=' + encodeURIComponent(keywordsParam);
+	var dbnameText = Y.one('#dbnameText');
+	var dbnameParam = dbnameText.get('value');
+	Y.io(url, {
+		data: 'dbname=' + dbnameParam + searchStr + '&onlytable=true',
+		on: {
+			complete: function (id, response) {
+				if (response.status >= 200 && response.status < 300) {
+					var json = Y.JSON.parse(response.responseText);
+					var results_window = window.open("", "results_window", "menubar=1,resizable=1,width=500,height=600,scrollbars=1");
+					results_window.document['writeln']('<head><link charset="utf-8" href="css/combo.css" rel="stylesheet" type="text/css"></head><body class="yui3-skin-sam"><h3>Results</h3><div id="table_content"></div><br/><br/></body>');
+					var cols = [];
+					var colsTypes = [];
+				    var data = [];
+					var colNames = json.columns;
+					for(var i = 0; i < colNames.length; i++) {
+						var cName = colNames[i];
+						for(var key in cName) {
+							if( cName.hasOwnProperty(key) ) {
+								cols[i] = key;
+								colsTypes[i] = cName[key];
+								break;
+							}
+						}
+					}
+					var dataVals = json.data;
+					for(var i = 0; i < dataVals.length; i++) {
+						data[i] = {};
+						for(var j = 0; j < dataVals[i].length; j++) {
+							if( colsTypes[j] == 'string' ) {
+								data[i][cols[j]] = dataVals[i][j];
+							}
+						}
+					}
+					YUI({win: results_window, doc: results_window.document, fetchCSS: false}).use('datatable-base', 'widget-base', function (childY) {
+							var table = new childY.DataTable.Base({
+					        	columnset: cols,
+					        	recordset: data
+					    	});
+							table.render(childY.one('#table_content'));
+						}
+				    );
+				}
+				else {
+					alert('ERROR');
+				}
+			} //end complete
+		} //end on
+	});
+}
+
+function activateButton(Y) {
+	var doSearchBtn = Y.one('#doSearchBtn');
+	var doSearchBtnFunc = function() {
+			callOrEval(Y);
+		} ;
+	doSearchBtn.set('onclick', doSearchBtnFunc);
+}
+
+YUI().use('node', 'json-parse', 'io-base', 'datatable-base', 'widget-base', function (Y) {
+	activateButton(Y);
+});
+
+</script>
+
+</body>
+
+</html>
+
+
+
+
